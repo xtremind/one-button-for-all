@@ -2,9 +2,14 @@ import { Scene } from 'phaser';
 
 export class Game extends Scene
 {
+    // Public Properties
     camera: Phaser.Cameras.Scene2D.Camera;
     background: Phaser.GameObjects.Image;
     msg_text : Phaser.GameObjects.Text;
+
+    // Private Properties
+    #update: Function;
+    #draw: Function;
 
     constructor ()
     {
@@ -27,9 +32,24 @@ export class Game extends Scene
         this.msg_text.setOrigin(0.5);
 
         this.input.once('pointerdown', () => {
-
             this.scene.start('GameOver');
-
         });
+
+        //initialise default function
+        this.#update = this.#update_game;
+        this.#draw = this.#draw_game;
+    }
+
+    update()
+    {
+      this.#update();
+      this.#draw();
+    }
+
+    #update_game(){
+
+    }
+
+    #draw_game(){
     }
 }

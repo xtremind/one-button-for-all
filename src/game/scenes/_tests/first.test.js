@@ -1,5 +1,7 @@
-import { expect, test } from 'vitest'
+import { expect, it, describe } from 'vitest'
 
-test('a title', () => 
+describe('feature', () => 
+  it('a test', () =>
     expect(!true).toBe(false)
+  )
 )
