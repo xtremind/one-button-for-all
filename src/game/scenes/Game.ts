@@ -8,8 +8,8 @@ export class Game extends Scene
     msg_text : Phaser.GameObjects.Text;
 
     // Private Properties
-    #update: Function;
-    #draw: Function;
+    #update: () => void;
+    #draw: () => void;
 
     constructor ()
     {
