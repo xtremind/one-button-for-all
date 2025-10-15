@@ -6,6 +6,8 @@ import { GameSelection } from './scenes/GameSelection';
 import { MainMenu } from './scenes/MainMenu';
 import { AUTO, Game } from 'phaser';
 import { Preloader } from './scenes/Preloader';
+import { Player } from './entities/Player';
+import { GameMode } from './entities/GameMode';
 
 //  Find out more information about the Game Config at:
 //  https://docs.phaser.io/api-documentation/typedef/types-core#gameconfig
@@ -26,8 +28,12 @@ const config: Phaser.Types.Core.GameConfig = {
     ]
 };
 
+
 const StartGame = (parent: string) => {
-    return new Game({ ...config, parent });
+    const game = new Game({ ...config, parent }) as Game & { mode?: GameMode; players?: Player[] };
+    game.mode = GameMode.NONE;
+    game.players = [];
+    return game;
 }
 
 export default StartGame;
