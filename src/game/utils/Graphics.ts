@@ -1,4 +1,5 @@
 import { Scene } from 'phaser';
+import { Player } from '../entities/Player';
 
 export default {
     addButton: (scene: Scene, content: string, position: any, callback?: Function) => {
@@ -43,5 +44,39 @@ export default {
 
     addTitle(){
 
+    },
+
+    drawMap(){
+
+    },
+
+    addPlayer: (scene: Scene, player: Player, position: { x: number; y: number; }): Phaser.GameObjects.Container => {
+        const sprite = scene.add.container(position.x, position.y);
+
+        const circle = scene.add.graphics()
+        circle.fillStyle(Phaser.Display.Color.HexStringToColor(player.color).color, 1);
+        circle.fillCircle(0, 0, 15)
+
+        sprite.add(circle);
+
+        const text = scene.add.text(0, 0, player.key, {
+            fontFamily: 'Arial Black', fontSize: 12, color: '#ffffff',
+            stroke: '#000000', strokeThickness: 4,
+            align: 'center'
+        })
+
+        sprite.add(text);
+        sprite.setDepth(10);
+
+        scene.physics.world.enable(sprite);
+        if(!sprite.body) throw new Error("Body not created");
+        (sprite.body as Phaser.Physics.Arcade.Body).setCollideWorldBounds(true);
+        (sprite.body as Phaser.Physics.Arcade.Body).setBounce(1, 1);
+        (sprite.body as Phaser.Physics.Arcade.Body).setVelocity(200, 200);
+
+        return sprite;
+    },
+
+    drawDot(){
     }
 }
