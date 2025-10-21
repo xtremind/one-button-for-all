@@ -77,6 +77,8 @@ export default {
         (sprite.body as Phaser.Physics.Arcade.Body).setBounce(1, 1);
         (sprite.body as Phaser.Physics.Arcade.Body).setVelocity(200, 200);
 
+        sprite.name = player.key;
+
         return sprite;
     },
 

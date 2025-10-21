@@ -44,7 +44,9 @@ export class Game extends Scene
         });
 
         //set collision
-        this.physics.add.collider(this.#players.map(p => p.sprite), this.#players.map(p => p.sprite));
+        this.physics.add.collider(this.#players.map(p => p.sprite), this.#players.map(p => p.sprite), (obj1, obj2) => { console.log("collision between players : "
++ (obj1 as Phaser.GameObjects.Container).name + " and " + (obj2 as Phaser.GameObjects.Container).name
+        ); });
 
         //initialise default function
         this.#update = this.#update_game;
