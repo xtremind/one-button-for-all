@@ -47,5 +47,6 @@
  - level : https://phaser.io/examples/v3.85.0/geom/polygon/view/basic-polygon 
  - physics : bounce : https://phaser.io/examples/v3.85.0/physics/arcade/view/circular-collisions
  - dot : ball/planet : https://phaser.io/examples/v3.85.0/physics/matterjs/view/balls
+   - rotate around planet : https://labs.phaser.io/edit.html?src=src%5Cactions%5Crotate%20around%20distance.js
  - player => text with bound : https://phaser.io/examples/v3.85.0/game-objects/text/view/text-bounds
    - in snake ? https://phaser.io/examples/v3.85.0/game-objects/graphics/view/multiple-stroke-rects
