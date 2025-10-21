@@ -33,7 +33,7 @@ export class Game extends Scene
             this.scene.start('GameOver');
         });*/
         //set world bounds
-        this.physics.world.setBounds(0, 0, this.cameras.main.width / (2 * this.cameras.main.zoom), this.cameras.main.height / (2 * this.cameras.main.zoom));
+        this.physics.world.setBounds(0, 0, this.cameras.main.width / this.cameras.main.zoom, this.cameras.main.height / this.cameras.main.zoom);
         this.physics.world.setBoundsCollision();
         this.physics.world.defaults.bodyDebugColor = 0xff00ff;
         this.physics.world.defaults.velocityDebugColor = 0x00ff00;

@@ -55,21 +55,24 @@ export default {
 
         const circle = scene.add.graphics()
         circle.fillStyle(Phaser.Display.Color.HexStringToColor(player.color).color, 1);
-        circle.fillCircle(0, 0, 15)
+        circle.fillCircle(15, 15, 15)
 
         sprite.add(circle);
 
-        const text = scene.add.text(0, 0, player.key, {
+        const text = scene.add.text(15, 15, player.key, {
             fontFamily: 'Arial Black', fontSize: 12, color: '#ffffff',
             stroke: '#000000', strokeThickness: 4,
             align: 'center'
         })
+        text.setOrigin(0.5);
 
         sprite.add(text);
         sprite.setDepth(10);
 
-        scene.physics.world.enable(sprite);
+        //scene.physics.world.enable(sprite);
+        scene.physics.add.existing(sprite);
         if(!sprite.body) throw new Error("Body not created");
+        (sprite.body as Phaser.Physics.Arcade.Body).setCircle(15);
         (sprite.body as Phaser.Physics.Arcade.Body).setCollideWorldBounds(true);
         (sprite.body as Phaser.Physics.Arcade.Body).setBounce(1, 1);
         (sprite.body as Phaser.Physics.Arcade.Body).setVelocity(200, 200);
