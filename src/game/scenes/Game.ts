@@ -1,5 +1,6 @@
 import { Scene } from 'phaser';
 import { Player } from '../entities/Player';
+import { Map } from '../entities/Map';
 import Graphics from '../utils/Graphics';
 
 export class Game extends Scene
@@ -14,22 +15,33 @@ export class Game extends Scene
     #draw: () => void;
 
     #players: Player[];
+    #map: Map = new Map();
+    #limit: Phaser.GameObjects.Polygon;
 
     constructor ()
     {
-        super('Game');
+        super({
+            key: 'Game',
+            physics: {
+                arcade: {
+                    debug: true
+                },
+                matter: {
+                    debug: true,
+                    gravity: { x: 0,y: 0 }
+                }
+            }
+        });
     }
 
     create ()
     {
-        //DEBUG MODE
-        this.physics.world.defaults.bodyDebugColor = 0xff00ff;
-        this.physics.world.defaults.velocityDebugColor = 0x00ff00;
-        this.physics.world.defaults.staticBodyDebugColor = 0x0000ff;
-
         //set world bounds
         this.physics.world.setBounds(0, 0, this.cameras.main.width / this.cameras.main.zoom, this.cameras.main.height / this.cameras.main.zoom);
         this.physics.world.setBoundsCollision();
+
+        //set Map elements
+        this.#limit = Graphics.addLimits(this, this.#map.getLimits());
 
         //initiate players
         this.#players = (this.sys.game as any).players;
@@ -44,9 +56,14 @@ export class Game extends Scene
         });
 
         //set collision
-        this.physics.add.collider(this.#players.map(p => p.sprite), this.#players.map(p => p.sprite), (obj1, obj2) => { console.log("collision between players : "
-+ (obj1 as Phaser.GameObjects.Container).name + " and " + (obj2 as Phaser.GameObjects.Container).name
-        ); });
+        const playerSprites = this.#players.map(p => p.sprite).filter((s): s is Phaser.GameObjects.Container => s != null);
+        this.physics.add.collider(playerSprites, playerSprites, (obj1, obj2) => {
+            console.log("collision between players : " + (obj1 as Phaser.GameObjects.Container).name + " and " + (obj2 as Phaser.GameObjects.Container).name);
+        });
+
+        this.physics.add.collider(playerSprites, this.#limit, (obj1, obj2) => {
+            console.log("collision between limits and player : " + (obj1 as Phaser.GameObjects.Container).name);
+        });
 
         //initialise default function
         this.#update = this.#update_game;
@@ -63,7 +80,9 @@ export class Game extends Scene
     #update_game(){
         //Tweak so that a moving player keeps the same speed
         this.#players.forEach(player => {
-            (player.sprite.body as Phaser.Physics.Arcade.Body).velocity.normalize().scale(200);
+            // skip if sprite or body is missing
+            const body = player.getBody();
+            body ? body.velocity.normalize().scale(200) : null;
         });
     }
 

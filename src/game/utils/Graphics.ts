@@ -85,5 +85,16 @@ export default {
     },
 
     addPlanet(){
+    },
+
+    addLimits(scene: Scene, limits: string){
+
+            const poly = scene.add.polygon(400, 300, limits, 0x6666ff, 1);
+
+            scene.matter.add.gameObject(poly, { shape: { type: 'fromVertices', verts: limits, flagInternal: true } });
+                        
+            (poly as any).setStatic(true);
+
+            return poly;
     }
 }

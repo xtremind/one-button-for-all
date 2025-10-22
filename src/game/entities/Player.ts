@@ -10,4 +10,11 @@ export class Player {
         this.key = key
         this.color = color;
     }
+
+    getBody(): Phaser.Physics.Arcade.Body | null {
+        if(this.sprite && this.sprite.body) {
+            return this.sprite.body as Phaser.Physics.Arcade.Body;
+        }
+        return null;
+    }
 }
