@@ -11,7 +11,6 @@ export default defineConfig(
         {
             ...globals.browser,
             ...globals.node
-    
         }
     }},
     eslint.configs.recommended,
